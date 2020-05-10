@@ -10,6 +10,7 @@ Book Sale System, Java Server Faces
 * Add Book and CD
 * Delete Book and CD 
 * Show all book
+* Book categories
 * Different login pages 
 * JavaDB 
 * Glassfish Server
