@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+        <ui:composition>
+<ul class="nav justify-content-center nav-pills bg-danger">
+                <li class="nav-item">
+                    <a id="cd-start-page-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toSecretCd()}">Çok Satanlar</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yerli-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toUserYerli()}">Yerli</a>
+                </li>
+                <li id="yabanci-link"
+                    class="nav-item">
+                    <a class="nav-link text-light" 
+                       href="#{navigation.toUserYabanci()}">Yabancı</a>
+                </li>
+               
+            </ul>
+
+            <script>
+                var x = String(document.URL);
+                
+                if (x.includes("user-yerli-cd.xhtml")) {
+                    var element = document.getElementById("yerli-link");
+                    element.classList.add("btn-dark");
+                } else if (x.includes("user-yabanci-cd.xhtml")) {
+                    var element = document.getElementById("yabanci-link");
+                    element.classList.add("btn-dark");
+                } else if (x.includes("user-cd.xhtml")) {
+                    var element = document.getElementById("cd-start-page-link");
+                    element.classList.add("btn-dark");
+                } 
+            </script>
+           
+        </ui:composition>   
+    </body>                
+</html>
+

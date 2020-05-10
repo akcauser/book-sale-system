@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="background: url('#{navigation.bgKayitOl()}') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+
+        <ui:insert name = "navbar" >
+            <ui:include src = "templates/navbar.xhtml" />
+        </ui:insert> 
+
+        <div class="align-items-center" style="margin-top: 5%;margin-left: 5%; width: 50%;background-color:">
+            <h:form id="kayitForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <h:inputText maxlength="50" 
+                                     id="email" 
+                                     pt:placeholder="Eposta Adresiniz" 
+                                     class="form-control" 
+                                     required="true" 
+                                     requiredMessage="Lütfen mail adresinizi giriniz!" 
+                                     value="#{registerControler.newUser.username}"/>
+                        <h:message for="email" class="text-danger"/>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="ad">Adı</label>
+                        <h:inputText maxlength="30" 
+                                     id="ad" 
+                                     pt:placeholder="Adınız" 
+                                     class="form-control" 
+                                     required="true" 
+                                     requiredMessage="Lütfen adınızı giriniz!" 
+                                     value="#{registerControler.newUser.ad}"/>
+                        <h:message for="ad" class="text-danger"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="soyad">Soyadı</label>
+                        <h:inputText maxlength="30" 
+                                     id="soyad" 
+                                     pt:placeholder="Soyadınız" 
+                                     class="form-control" 
+                                     required="true" 
+                                     requiredMessage="Lütfen soyadınızı giriniz!" 
+                                     value="#{registerControler.newUser.soyad}"/>
+                        <h:message for="soyad" class="text-danger"/>
+                        
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="sifre1">Şifre</label>
+                        <h:inputSecret maxlength="16" 
+                                       id="sifre1" 
+                                       pt:placeholder="Şifreniz" 
+                                       class="form-control" 
+                                       required="true" 
+                                       requiredMessage="Lütfen şifrenizi giriniz!" 
+                                       value="#{registerControler.newUser.password}"
+                                       />
+                        <h:message for="sifre1" class="text-danger"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="sifre2">Şifre Tekrarı</label>
+                        <h:inputSecret maxlength="16" 
+                                       id="sifre2" 
+                                       pt:placeholder="Şifre Tekrarı" 
+                                       class="form-control" 
+                                       required="true" 
+                                       requiredMessage="Lütfen şifrenizi tekrar giriniz!"
+                                       value="#{registerControler.newUser.passwordAgain}"
+                                       />
+                        <h:message for="sifre2" class="text-danger" />
+                    </div>
+                    
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="adres">Adres</label>
+                        <h:inputTextarea id="adres" 
+                                         pt:placeholder="Detaylı Adresinizi Giriniz" 
+                                         class="form-control" 
+                                         required="true" 
+                                         requiredMessage="Lütfen adresinizi giriniz!" 
+                                         value="#{registerControler.newUser.adres}"/>
+                        <h:message for="adres" class="text-danger"/>
+                    </div>
+
+                </div>
+
+               
+
+
+
+                <h:commandButton id="kayit-button" 
+                                 disabled="false"
+                                 type="submit" 
+                                 class="btn btn-primary" 
+                                 value="Kayıt Ol" 
+                                 action="#{registerControler.saveUser()}" />
+            </h:form>
+        </div>
+        <script>
+          
+            
+        </script>
+
+
+    </h:body>
+</html>
+

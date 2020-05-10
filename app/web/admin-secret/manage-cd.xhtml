@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="background: url('http://pilarreadingcenter.org/wp-content/uploads/2016/04/Wood-White-Background-HD.jpg') no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+        <nav>
+            <ul class="nav justify-content-center nav-pills bg-dark">
+
+                <li class="nav-item">
+                    <a id="cd-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toManageCd()}">CD'leri Listele</a>
+                </li>
+                
+                   
+                <li class="nav-item">
+                    <a id="cd-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddCD()}">CD Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a id="artist-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddArtist()}">Artist Ekle</a>
+                </li>
+
+                
+
+            </ul>
+
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("manage-cd.xhtml")) {
+                    var element = document.getElementById("cd-listele-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("cd-ekle.xhtml")) {
+                    var element = document.getElementById("cd-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("artist-ekle.xhtml")) {
+                    var element = document.getElementById("artist-ekle-link");
+                    element.classList.add("btn-danger");
+                }
+
+            </script>
+        </nav> 
+        
+         <h:form>
+             <h:dataTable class="table table-secondary" value="#{cdModel.fetchCDler()}" var="cd"  >
+            
+            <h:column>
+                <f:facet name="header">ISBN</f:facet>
+                #{cd.isbn}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Kitap Adı</f:facet>
+                #{cd.adi}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Kategori</f:facet>
+                #{cd.kategori}
+            </h:column>
+           
+            <h:column>
+                <f:facet name="header">Stok Adet</f:facet>
+                #{cd.stok}
+            </h:column>
+            
+           
+            
+        </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

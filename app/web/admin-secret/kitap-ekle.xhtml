@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style type="text/css">
+            .label, .value {
+                vertical-align: top
+            }
+
+            .output {
+                font-weight: bold
+            }
+        </style>
+    </h:head>
+    <h:body style="background: url('#{navigation.bgKitapEkle()}') no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+
+        <nav>
+
+            <ul class="nav justify-content-center nav-pills bg-dark">
+
+                <li class="nav-item">
+                    <a id="kitap-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toManageBook()}">Kitapları Listele</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yayinevi-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toYayineviListele()}">Yayınevi Listele</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="kitap-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddBook()}">Kitap Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yazar-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddAuthor()}">Yazar Ekle</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="yayinevi-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddYayinevi()}">Yayınevi Ekle</a>
+                </li>
+
+            </ul>
+
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("manage-book.xhtml")) {
+                    var element = document.getElementById("kitap-listele-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("kitap-ekle.xhtml")) {
+                    var element = document.getElementById("kitap-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yazar-ekle.xhtml")) {
+                    var element = document.getElementById("yazar-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yayinevi-ekle.xhtml")) {
+                    var element = document.getElementById("yayinevi-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yayinevi-listele.xhtml")) {
+                    var element = document.getElementById("yayinevi-listele-link");
+                    element.classList.add("btn-danger");
+                }
+
+            </script>
+        </nav>   
+        <!-- body devamı -->
+
+        <!-- Kitap Ekleme DİV -->
+
+
+        <h:form enctype="multipart/form-data" id="kitapEkleForm" class="text-light" style="width: 100%; margin-left: 25%; margin-top: 5%;">
+            <b><h:outputLabel for="yazar-menu" value="Eklemek istediğiniz kitap bilgilerini gir" class="text-danger"/></b>
+
+            <div style="width: 100%;">
+                <div style="float: left;">
+                    <label for="kategori-menu">Yazar Seç</label>
+                    <h:panelGrid style="margin-bottom:10px" cellpadding="2" >
+
+                        <p:selectOneMenu id="yazar-menu" value="#{manageBookController.seciliYazarID}" 
+                                         filter="true" filterMatchMode="contains"
+                                         style="width: 160px; font-size: 17px;" effect="puff" 
+                                         panelStyle="width:180px" onchange="test()">
+
+                            <f:selectItems value="#{yazarModel.fetchYazarlar()}" var="yazar" itemValue="#{yazar.id}" itemLabel="#{yazar.adi} #{yazar.soyadi}" />
+                        </p:selectOneMenu>  
+                    </h:panelGrid>
+                </div>
+
+                <div style="float: left; margin-left: 1%;">
+                    <label for="kategori-menu">Yayınevi Seç</label>
+                    <h:panelGrid style="margin-bottom:10px" cellpadding="2" >
+
+                        <p:selectOneMenu id="yayinevi-menu" value="#{manageBookController.seciliYayineviID}" 
+                                         filter="true" filterMatchMode="contains"
+                                         style="width: 160px; font-size: 17px;" effect="puff" 
+                                         panelStyle="width:180px">
+
+                            <f:selectItems value="#{yayineviModel.fetchYayinevleri()}" var="yayinevi" itemValue="#{yayinevi.id}" 
+                                           itemLabel="#{yayinevi.adi}" />
+                        </p:selectOneMenu>  
+                    </h:panelGrid>
+                </div>
+                <div style="float: left; margin-left: 1%;">
+                    <label for="kategori-menu">Kategori Seç</label>
+                    <h:panelGrid style="margin-bottom:10px" cellpadding="2" >
+                        <p:selectOneMenu id="kategori-menu" 
+                                         filter="true" filterMatchMode="contains"
+                                         style="width: 160px; font-size: 17px;" effect="puff" required="true"
+                                         requiredMessage="Kitap kategorisi seçilmedi!" 
+                                         panelStyle="width:180px" value="#{manageBookController.eklenecekKitap.kategori}">
+
+                            <f:selectItem itemValue="Polisiye" itemLabel="Polisiye" />
+                            <f:selectItem itemValue="Bilim Kurgu" itemLabel="Bilim Kurgu" />
+                            <f:selectItem itemValue="Bilgisayar" itemLabel="Bilgisayar" />
+                            <f:selectItem itemValue="Kişisel Gelişim" itemLabel="Kişisel Gelişim" />
+                            <f:selectItem itemValue="Felsefe" itemLabel="Felasefe" />
+
+                        </p:selectOneMenu>  
+                        <h:message for="kategori-menu" class="text-danger"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+
+            <div style="width: 100%; float: left;">
+                <div class="form-row" >
+                    <div class="form-group col-2">
+                        <label for="isbn-number">ISBN</label>
+
+                        <h:inputText class="form-control" 
+                                     id="isbn-number" 
+                                     pt:placeholder="ISBN gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için ISBN giriniz!"
+                                     validatorMessage="ISBN 13 haneli bir sayıdan oluşmaktadır!"
+                                     maxlength="13"
+                                     value="#{manageBookController.eklenecekKitap.isbn}">
+                            <f:validateRegex pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" />
+
+                        </h:inputText>
+                        <h:message for="isbn-number" class="text-danger"/>
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="kitap-adi">Kitap Adı</label>
+                        <h:inputText class="form-control" 
+                                     id="kitap-adi" 
+                                     pt:placeholder="Kitabın adını gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için kitap adı giriniz!"
+                                     maxlength="50"
+                                     value="#{manageBookController.eklenecekKitap.adi}"/>
+                        <h:message for="kitap-adi" class="text-danger"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-2">
+                        <label for="basim-yili">Basım Yılı</label>
+                        <h:inputText class="form-control" 
+                                     id="basim-yili" 
+                                     pt:placeholder="Basım yılını gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için basım yılı giriniz!"
+                                     validatorMessage="Geçersiz giriş!"
+                                     maxlength="4"
+                                     value="#{manageBookController.eklenecekKitap.basimYili}">
+                            <f:validateRegex pattern="[0-9][0-9][0-9][0-9]" />
+
+                        </h:inputText>
+                        <h:message for="basim-yili" class="text-danger"/>
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="sayfa-sayisi">Sayfa Sayısı</label>
+                        <h:inputText class="form-control" 
+                                     id="sayfa-sayisi" 
+                                     pt:placeholder="Sayfa sayısı gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için sayfa sayısını giriniz!"
+                                     validatorMessage="Geçersiz giriş!"
+                                     value="#{manageBookController.eklenecekKitap.sayfaSayisi}">
+                            <f:validateRegex pattern="[0-9]+" />
+
+                        </h:inputText>
+                        <h:message for="sayfa-sayisi" class="text-danger"/>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-2">
+                        <label for="fiyat">Fiyat</label>
+                        <h:inputText class="form-control" 
+                                     id="fiyat" 
+                                     pt:placeholder="Kitabın fiyatını gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için fiyatını giriniz!"
+                                     validatorMessage="Geçersiz giriş!"
+                                     value="#{manageBookController.eklenecekKitap.fiyat}">
+                            <f:validateRegex pattern="[0-9]+" />
+
+                        </h:inputText>
+                        <h:message class="text-danger" for="fiyat"/>
+                    </div>
+
+                    <div class="form-group col-2">
+                        <label for="stok">Stok Miktarı</label>
+                        <h:inputText class="form-control" 
+                                     id="stok" 
+                                     pt:placeholder="Kitabın stok miktarını gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için stok miktarını giriniz!"
+                                     validatorMessage="Geçersiz giriş!"
+                                     value="#{manageBookController.eklenecekKitap.stok}">
+                            <f:validateRegex pattern="[0-9]+" />
+
+                        </h:inputText>
+
+                        <h:message class="text-danger" for="stok"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group  col-2">
+                        <label for="resim-sec" class="text-light">Resim Seç</label>
+                        <h:inputFile  id="resim-sec"
+                                      class="form-control"
+                                      value="#{manageBookController.eklenecekResim}"
+                                      required="true"
+                                      requiredMessage="Kitap eklemek için resim seçmelisiniz!">
+                            <f:passThroughAttribute name="accept" value="image/png" />
+                        </h:inputFile>
+                        <h:message class="text-danger" for="resim-sec"/>
+                    </div>
+                </div>
+                <div>
+                    <h:commandButton style="margin-left: 10%;" action="#{manageBookController.kitapEkle()}"  class="btn btn-success" value="Kitabı Kaydet">
+
+                    </h:commandButton>   
+                </div>
+            </div>
+
+        </h:form>
+
+
+
+
+
+
+
+    </h:body>
+</html>
+

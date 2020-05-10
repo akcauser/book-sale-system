@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="background: url('http://pilarreadingcenter.org/wp-content/uploads/2016/04/Wood-White-Background-HD.jpg') no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+
+        <nav>
+            <ul class="nav justify-content-center nav-pills bg-dark">
+
+                <li class="nav-item">
+                    <a id="kitap-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toManageBook()}">Kitapları Listele</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yayinevi-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toYayineviListele()}">Yayınevi Listele</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="kitap-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddBook()}">Kitap Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yazar-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddAuthor()}">Yazar Ekle</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="yayinevi-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddYayinevi()}">Yayınevi Ekle</a>
+                </li>
+
+            </ul>
+
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("manage-book.xhtml")) {
+                    var element = document.getElementById("kitap-listele-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("kitap-ekle.xhtml")) {
+                    var element = document.getElementById("kitap-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yazar-ekle.xhtml")) {
+                    var element = document.getElementById("yazar-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yayinevi-ekle.xhtml")) {
+                    var element = document.getElementById("yayinevi-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yayinevi-listele.xhtml")) {
+                    var element = document.getElementById("yayinevi-listele-link");
+                    element.classList.add("btn-danger");
+                }
+
+            </script>
+        </nav>   
+
+        
+        <h:form>
+            <h:dataTable class="table table-secondary" value="#{yayineviModel.fetchYayinevleri()}" var="yayinevi"  >
+            
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{yayinevi.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Yayınevi Adı</f:facet>
+                #{yayinevi.adi}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Teelfon Numarası</f:facet>
+                #{yayinevi.telefonNumarasi}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Adres</f:facet>
+                #{yayinevi.adres}
+            </h:column>
+            
+      
+        </h:dataTable>
+        </h:form>
+
+
+    </h:body>
+</html>
+

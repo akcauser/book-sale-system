@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="background: url('#{navigation.bgCD()}') no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+        <nav>
+            <ul class="nav justify-content-center nav-pills bg-dark">
+
+                <li class="nav-item">
+                    <a id="cd-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toManageCd()}">CD'leri Listele</a>
+                </li>
+                
+                   
+                <li class="nav-item">
+                    <a id="cd-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddCD()}">CD Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a id="artist-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddArtist()}">Artist Ekle</a>
+                </li>
+
+                
+
+            </ul>
+
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("manage-cd.xhtml")) {
+                    var element = document.getElementById("cd-listele-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("cd-ekle.xhtml")) {
+                    var element = document.getElementById("cd-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("artist-ekle.xhtml")) {
+                    var element = document.getElementById("artist-ekle-link");
+                    element.classList.add("btn-danger");
+                }
+
+            </script>
+        </nav>
+        
+        <!-- Artist Ekleme DİV -->
+            <div id="yazar-ekle" style="width: 100%; margin-left: 25%; float: left;">
+                <h:form style="margin: 5%;" class="text-light">
+                    
+
+
+
+
+                    <b><h:outputLabel value="Aradığın yazar listede yoksa yazar ekle" class="text-danger"/></b>
+
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="artist-adi">Yazar Adı</label>
+                            <h:inputText class="form-control" 
+                                         id="artist-adi" 
+                                         pt:placeholder="Artist adını gir"
+                                         required="true"
+                                         requiredMessage="Artist adını giriniz!"
+                                         maxlength="50"
+                                         value="#{manageCdController.eklenecekArtist.adi}"/>
+                            <h:message for="artist-adi" class="text-danger"/>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="artist-soyadi">Artist Soyadı</label>
+                            <h:inputText class="form-control" 
+                                         id="artist-soyadi" 
+                                         pt:placeholder="Artist soyadını gir" 
+                                         required="true"
+                                         requiredMessage="Artist soyadını giriniz!"
+                                         maxlength="50"
+                                         value="#{manageCdController.eklenecekArtist.soyadi}"/>
+                            <h:message for="artist-soyadi" class="text-danger"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="artist-dogum">Artist Doğum Yılı</label>
+
+                            <h:inputText class="form-control" 
+                                         id="artist-dogum" 
+                                         pt:placeholder="Artist doğum yılını giriniz" 
+                                         required="true"
+                                         requiredMessage="Artist doğum yılı girilmedi!"
+                                         validatorMessage="Doğum tarihi 4 haneli olmalıdır!"
+                                         maxlength="4"
+                                         value="#{manageCdController.eklenecekArtist.dogum_yili}">
+                        <f:validateRegex pattern="[0-9][0-9][0-9][0-9]" />
+                        
+                    </h:inputText>
+                            <h:message for="artist-dogum" class="text-danger"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="artist-about">Artist Hakkında Kısa Bilgi</label>
+                            <h:inputTextarea class="form-control" 
+                                         id="artist-about" 
+                                         pt:placeholder="Artist hakkında birşeyler yaz"
+                                         required="true"
+                                         requiredMessage="Artist hakkında bilgi girilmedi!"
+                                         a:maxlength="2000"
+                                         value="#{manageCdController.eklenecekArtist.biyografisi}"/>
+                            <h:message for="artist-about" class="text-danger"/>
+                        </div>
+                    </div>
+                    <div>
+                        <h:commandButton action="#{manageCdController.artistEkle()}" style="margin-left: 10%;" class="btn btn-success" value="Artist Kaydet"></h:commandButton>   
+                    </div>
+
+                </h:form>
+            </div>
+        
+        
+    </h:body>
+</html>
+

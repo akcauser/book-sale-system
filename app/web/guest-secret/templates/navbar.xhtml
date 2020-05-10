@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+        <ui:composition>
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#{navigation.toIndex()}">
+                    <img style="width:50px;" src="https://ui-ex.com/images/transparent-logo-book-3.png" alt=" "/>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" id="main-link" href="#{navigation.toIndex()}">Anasayfa <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" id="kitap-link" href="#{navigation.toKitap()}">Kitap</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" id="cd-link" href="#{navigation.toCD()}">CD</a>
+                        </li>  
+
+                    </ul>
+
+
+                    <div>
+                        <ul class="navbar-nav mr-auto">
+
+                            <li class="nav-item active">
+                                <a class="nav-link" id="giris-link" href="#{navigation.toLogin()}">Giriş Yap <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" id="kayit-link" href="#{navigation.toRegister()}">Kayıt Ol</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" id="admin-link" href="#{navigation.toAdminlogin()}">Admin</a>
+                            </li>  
+
+                        </ul>
+                    </div>       
+                    <h:form class="form-inline my-2 my-lg-0">
+                        <h:inputText class="form-control mr-sm-2"/>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </h:form>
+
+                </div>
+            </nav>
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("guest-cd.xhtml") || x.includes("yerli-cd.xhtml") || x.includes("yabanci-cd.xhtml")) {
+                    var element = document.getElementById("cd-link");
+                    element.classList.add("btn-success");
+                } else if (x.includes("guest-kitap.xhtml") || x.includes("kitap-kategorileri") || x.includes("kitap-incele.xhtml")) {
+                    var element = document.getElementById("kitap-link");
+                    element.classList.add("btn-success");
+                } else if (x.includes("guest-main.xhtml")) {
+                    var element = document.getElementById("main-link");
+                    element.classList.add("btn-success");
+                } else if (x.includes("kullanici-giris.xhtml")) {
+                    var element = document.getElementById("giris-link");
+                    element.classList.add("btn-success");
+                } else if (x.includes("kayit-ol.xhtml")) {
+                    var element = document.getElementById("kayit-link");
+                    element.classList.add("btn-success");
+                } else if (x.includes("admin-giris.xhtml")) {
+                    var element = document.getElementById("admin-link");
+                    element.classList.add("btn-danger");
+                }
+            </script>
+        </ui:composition>   
+    </body>                
+</html>
+

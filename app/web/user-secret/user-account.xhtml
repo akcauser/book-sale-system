@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body >
+
+        <ui:insert name="secret-navbar">
+            <ui:include src="templates/user-navbar.xhtml"/>
+        </ui:insert>
+        
+         <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title">Müşteri ID</h5>
+                <p class="card-text">#{userModel.id}</p>
+                
+            </div>
+        </div>
+        
+        <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title">Adım</h5>
+                <p class="card-text">#{userModel.ad}</p>
+                
+            </div>
+        </div>
+        
+        <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title">Soyadım</h5>
+                <p class="card-text">#{userModel.soyad}</p>
+                
+            </div>
+        </div>
+        
+        <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title">Adresim</h5>
+                <p class="card-text">#{userModel.adres}</p>
+               
+            </div>
+        </div>
+        
+         <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title">Mail Adresim</h5>
+                <p class="card-text">#{userModel.username}</p>
+                
+            </div>
+        </div>
+
+        
+
+
+    </h:body>
+</html>

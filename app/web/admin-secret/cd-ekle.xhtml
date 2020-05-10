@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="background: url('#{navigation.bgCD()}') no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+        <nav>
+            <ul class="nav justify-content-center nav-pills bg-dark">
+
+                <li class="nav-item">
+                    <a id="cd-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toManageCd()}">CD'leri Listele</a>
+                </li>
+                
+                   
+                <li class="nav-item">
+                    <a id="cd-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddCD()}">CD Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a id="artist-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddArtist()}">Artist Ekle</a>
+                </li>
+
+                
+
+            </ul>
+
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("manage-cd.xhtml")) {
+                    var element = document.getElementById("cd-listele-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("cd-ekle.xhtml")) {
+                    var element = document.getElementById("cd-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("artist-ekle.xhtml")) {
+                    var element = document.getElementById("artist-ekle-link");
+                    element.classList.add("btn-danger");
+                }
+
+            </script>
+        </nav> 
+        
+        
+        
+        <h:form enctype="multipart/form-data" id="cdEkleForm" class="text-light" style="width: 100%; margin-left: 25%; margin-top: 5%;">
+            <b><h:outputLabel for="artist-menu" value="Eklemek istediğin CD bilgilerini gir" class="text-danger"/></b>
+
+            <div style="width: 100%;">
+                <div style="float: left;">
+                    <label for="artist-menu">Artist Seç</label>
+                    <h:panelGrid style="margin-bottom:10px" cellpadding="2" >
+
+                        <p:selectOneMenu id="artist-menu" value="#{manageCdController.seciliArtistID}" 
+                                         filter="true" filterMatchMode="contains"
+                                         style="width: 160px; font-size: 17px;" effect="puff" 
+                                         panelStyle="width:180px" onchange="test()">
+
+                            <f:selectItems value="#{artistModel.fetchArtistler()}" var="artist" itemValue="#{artist.id}" itemLabel="#{artist.adi} #{artist.soyadi}" />
+                        </p:selectOneMenu>  
+                    </h:panelGrid>
+                </div>
+                <div style="float: left; margin-left: 1%;">
+                    <label for="kategori-menu">Kategori Seç</label>
+                    <h:panelGrid style="margin-bottom:10px" cellpadding="2" >
+                        <p:selectOneMenu id="kategori-menu" 
+                                         filter="true" filterMatchMode="contains"
+                                         style="width: 160px; font-size: 17px;" effect="puff" required="true"
+                                         requiredMessage="Kitap kategorisi seçilmedi!" 
+                                         panelStyle="width:180px" value="#{manageCdController.eklenecekCD.kategori}">
+
+                            <f:selectItem itemValue="Yerli" itemLabel="Yerli" />
+                            <f:selectItem itemValue="Yabancı" itemLabel="Yabancı" />
+                            
+                            
+
+                        </p:selectOneMenu>  
+                        <h:message for="kategori-menu" class="text-danger"/>
+                    </h:panelGrid>
+                </div>
+
+                
+            </div>
+
+            <div style="width: 100%; float: left;">
+                <div class="form-row" >
+                    <div class="form-group col-2">
+                        <label for="isbn-number">ISBN</label>
+
+                        <h:inputText class="form-control" 
+                                     id="isbn-number" 
+                                     pt:placeholder="ISBN gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için ISBN giriniz!"
+                                     validatorMessage="ISBN 13 haneli bir sayıdan oluşmaktadır!"
+                                     maxlength="13"
+                                     value="#{manageCdController.eklenecekCD.isbn}">
+                            <f:validateRegex pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" />
+
+                        </h:inputText>
+                        <h:message for="isbn-number" class="text-danger"/>
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="kitap-adi">CD Adı</label>
+                        <h:inputText class="form-control" 
+                                     id="cd-adi" 
+                                     pt:placeholder="CD adını gir"
+                                     required="true"
+                                     requiredMessage="CD eklemek için cd adı giriniz!"
+                                     maxlength="50"
+                                     value="#{manageCdController.eklenecekCD.adi}"/>
+                        <h:message for="kitap-adi" class="text-danger"/>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-2">
+                        <label for="fiyat">Fiyat</label>
+                        <h:inputText class="form-control" 
+                                     id="fiyat" 
+                                     pt:placeholder="CD fiyatını gir"
+                                     required="true"
+                                     requiredMessage="Kitap eklemek için fiyatını giriniz!"
+                                     validatorMessage="Geçersiz giriş!"
+                                     value="#{manageCdController.eklenecekCD.fiyat}">
+                            <f:validateRegex pattern="[0-9]+" />
+
+                        </h:inputText>
+                        <h:message class="text-danger" for="fiyat"/>
+                    </div>
+
+                    <div class="form-group col-2">
+                        <label for="stok">Stok Miktarı</label>
+                        <h:inputText class="form-control" 
+                                     id="stok" 
+                                     pt:placeholder="CD stok miktarını gir"
+                                     required="true"
+                                     requiredMessage="CD eklemek için stok miktarını giriniz!"
+                                     validatorMessage="Geçersiz giriş!"
+                                     value="#{manageCdController.eklenecekCD.stok}">
+                            <f:validateRegex pattern="[0-9]+" />
+                        </h:inputText>
+                        <h:message class="text-danger" for="stok"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group  col-2">
+                        <label for="resim-sec" class="text-light">Resim Seç</label>
+                        <h:inputFile  id="resim-sec"
+                                      class="form-control"
+                                      value="#{manageCdController.eklenecekResim}"
+                                      required="true"
+                                      requiredMessage="CD eklemek için resim seçmelisiniz!">
+                            <f:passThroughAttribute name="accept" value="image/png" />
+                        </h:inputFile>
+                        <h:message class="text-danger" for="resim-sec"/>
+                    </div>
+                </div>
+                <div>
+                    <h:commandButton style="margin-left: 10%;" action="#{manageCdController.cdEkle()}"  class="btn btn-success" value="CD Kaydet">
+
+                    </h:commandButton>   
+                </div>
+            </div>
+
+        </h:form>
+    </h:body>
+</html>
+

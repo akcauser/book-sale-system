@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style type="text/css">
+            .label, .value {
+                vertical-align: top
+            }
+
+            .output {
+                font-weight: bold
+            }
+        </style>
+    </h:head>
+    <h:body style="background: url('#{navigation.bgKitapEkle()}') no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;">
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+        
+        <nav>
+           <ul class="nav justify-content-center nav-pills bg-dark">
+
+                <li class="nav-item">
+                    <a id="kitap-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toManageBook()}">Kitapları Listele</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yayinevi-listele-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toYayineviListele()}">Yayınevi Listele</a>
+                </li>
+                   
+                <li class="nav-item">
+                    <a id="kitap-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddBook()}">Kitap Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a id="yazar-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddAuthor()}">Yazar Ekle</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="yayinevi-ekle-link"
+                       class="nav-link text-light" 
+                       href="#{navigation.toAddYayinevi()}">Yayınevi Ekle</a>
+                </li>
+
+            </ul>
+
+
+            <script>
+                var x = String(document.URL);
+
+                if (x.includes("manage-book.xhtml")) {
+                    var element = document.getElementById("kitap-listele-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("kitap-ekle.xhtml")) {
+                    var element = document.getElementById("kitap-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yazar-ekle.xhtml")) {
+                    var element = document.getElementById("yazar-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yayinevi-ekle.xhtml")) {
+                    var element = document.getElementById("yayinevi-ekle-link");
+                    element.classList.add("btn-danger");
+                } else if (x.includes("yayinevi-listele.xhtml")) {
+                    var element = document.getElementById("yayinevi-listele-link");
+                    element.classList.add("btn-danger");
+                }
+
+            </script>
+            </nav>
+            
+        <!-- Yayınevi ekleme formu-->
+         <!-- Yayınevi ekle div-->
+            
+            <div id="yayinevi-ekle" style="width: 100%; margin-left: 25%; float: left;">
+                <h:form style="margin: 5%;" class="text-light">
+                    
+
+                    <b><h:outputLabel for="yayinevi-menu" value="Aradığın yayınevi listede yoksa yayınevi ekle." class="text-danger"/></b>
+
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="yayınevi-adi">Yayınevi Adı</label>
+                            <h:inputText class="form-control" 
+                                         id="yayinevi-adi" 
+                                         pt:placeholder="Yayınevi adını gir"
+                                         required="true"
+                                         requiredMessage="Yayınevi adını giriniz!"
+                                         maxlength="50"
+                                         value="#{manageBookController.eklenecekYayinevi.adi}"/>
+                            <h:message for="yayinevi-adi" class="text-danger"/>
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="yayinevi-gsm">Telefon -> <b class="text-danger">örnek: 5554443322</b></label>
+                           
+                            <h:inputText class="form-control" 
+                                         id="yayinevi-gsm" 
+                                         pt:placeholder="Yayınevinin telefon numarasını gir"
+                                         required="true"
+                                         requiredMessage="Yayınevi telefonunu giriniz!"
+                                         validatorMessage="Telefonu başında sıfır olmadan örneğe uygun şekilde yazınız"
+                                         maxlength="10"
+                                         value="#{manageBookController.eklenecekYayinevi.telefonNumarasi}">
+                        <f:validateRegex pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" />
+                        
+                    </h:inputText>
+                            <h:message for="yayinevi-gsm" class="text-danger"/>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="yazar-about">Yayınevi adres</label>
+                            <h:inputTextarea class="form-control" 
+                                         id="yayinevi-adres" 
+                                         pt:placeholder="Yayınevi adresinin gir"
+                                         required="true"
+                                         requiredMessage="Yayınevi adresini giriniz!"
+                                         a:maxlength="300"
+                                         value="#{manageBookController.eklenecekYayinevi.adres}"/>
+                            <h:message for="yayinevi-adres" class="text-danger"/>
+                        </div>
+                    </div>
+                    <div>
+                        <h:commandButton action="#{manageBookController.yayineviEkle()}" style="margin-left: 10%;" class="btn btn-success" value="Yayınevini Kaydet"></h:commandButton>   
+                    </div>
+
+                </h:form>
+            </div>
+        
+        
+    </h:body>
+</html>
+

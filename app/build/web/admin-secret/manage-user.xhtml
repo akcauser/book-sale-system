@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>KCD Kitaplarınızla buluşma noktanız...</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:insert>
+            <ui:include src="templates/admin-navbar.xhtml"/>
+        </ui:insert>
+        <h:form>
+        <h:dataTable class="table table-secondary" value="#{manageUsersController.users}" var="user"  >
+            
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{user.ID}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Adı</f:facet>
+                #{user.ADI}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Soyadı</f:facet>
+                #{user.SOYADI}
+            </h:column>
+            <h:column>
+                <f:facet name="header">E-Posta</f:facet>
+                #{user.EPOSTA}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Kayıt Tarihi</f:facet>
+                #{user.KAYIT_TARIHI}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Üyelik Durumu</f:facet>
+                <h6 class="#{user.AKTIF==1 ? 'text-success' : 'text-danger'}">#{user.AKTIF==1 ? 'AKTİF' : 'PASİF'}</h6>
+            </h:column>
+           
+            <h:column>
+                <f:facet name="header">Üyeliği Sil</f:facet>
+                <h:commandButton class="#{user.AKTIF==1 ? 'btn-danger' : 'btn-success'}" 
+                                 value="#{user.AKTIF==1 ? 'Üyeliği Pasifleştir' : 'Üyeliği Aktifleştir'}"
+                                 action="#{manageUsersController.changeUserStatus(user.ID,user.AKTIF)}"
+                                 >
+                
+                </h:commandButton>
+                
+            </h:column>
+        </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

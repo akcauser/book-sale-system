@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                max-width: 250px;
+                margin: auto;
+                text-align: center;
+                font-family: helvetica;
+                position: relative;
+            }
+
+        </style>
+    </h:head> <h:body style="background: url('https://previews.123rf.com/images/aboutnuylove/aboutnuylove1708/aboutnuylove170800528/84959652-texture-wood-background-basic-classic-wood-style-for-deskwork-or-floor-table-wood-background-style.jpg') no-repeat center center fixed;
+                      -webkit-background-size: cover;
+                      -moz-background-size: cover;
+                      background-size: cover;
+                      -o-background-size: cover;">
+        <img src="../images/kargo-free.png" width="100%" height="auto" alt="kargo-free"/>
+
+        <ui:insert name = "navbar" >
+            <ui:include src = "templates/navbar.xhtml" />
+        </ui:insert> 
+
+
+        <ui:insert>
+            <ui:include src = "kitap-kategorileri/nav.xhtml"/>
+        </ui:insert>
+
+        <!-- 1 tane kitap getirilecek ve özellikleri ISBN numarasına göre gösterilecek -->
+        <!-- 1 kitap getiren fonksiyon yazılacak -->
+
+
+
+
+
+
+        
+        <div style="float: left; margin-left: 100px; margin-top: 5%; ">
+            <img src="/BookSaleManagementSystem/images/kitaplar/#{kitapModel.isbn}.jpg" style="width: 500px; height: 650px"/>
+        </div>
+
+
+        <div class="card" style="margin-top: 5%;">
+            
+            <div class="card-header">
+                <h1 style="color: #bd2130;">#{kitapModel.adi}</h1> 
+            </div>
+            
+            <div class="card-body">
+                Kategori: #{kitapModel.kategori}
+            </div>
+            <div class="card-body">
+                Yazar: #{kitapModel.yazar}
+            </div>
+            <div class="card-body">
+                Basım Yılı: #{kitapModel.basimYili}
+            </div>
+            <div class="card-body">
+                Yayınevi: #{kitapModel.yayinevi}
+            </div>
+            <div class="card-body">
+                FİYAT <h1>#{kitapModel.fiyat} TL</h1> 
+            </div>
+            <div class="card-body">
+                <a class="text-light btn btn-success" href="#{navigation.toLogin()}">Sepete Ekle</a>
+            </div>
+
+
+
+        </div>
+       
+        <div class="card-body" style=" margin: 5%; background-color: wheat; float: left;">
+            <div class="card-body">
+                <h4>Yazar Hakkında</h4>
+                #{kitapModel.yazarHakkinda}
+            </div>
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </h:body>
+</html>
+
+
+
